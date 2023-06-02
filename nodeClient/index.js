@@ -1,19 +1,12 @@
-// the node program that captures local performance data
-// and sends it up to the socket.io server
-// Req:
-// - farmhash
-// - socket.io-client
-
-// what do we want to know from node about performance?
-// - CPU load (current)
-// - Memory Useage
-// - OS type
-// - uptime
-// - CPU info
-
 const os = require('os');
 const io = require('socket.io-client');
-let socket = io('http://127.0.0.1:3000'); //server port
+
+const options = {
+  auth: {
+    token: '123'
+  }
+}
+const socket = io('http://127.0.0.1:3000', options); //server port
 
 socket.on('connect', () => {
   console.log('NodeClient connected to the socket server... hooray!!!');
@@ -28,7 +21,16 @@ socket.on('connect', () => {
       break;
     }
   }
-  console.log(macA);
+  
+  const perfDataInterval = setInterval(async () => {
+    const perfData = await performanceData();
+    perfData.macA = macA;
+    socket.emit('perfData', perfData);
+  }, 1000);
+  
+  socket.on('disconnect', () => {
+    clearInterval(perfDataInterval);
+  })
 })
 
 const performanceData = () => new Promise(async (resolve, reject) => {
