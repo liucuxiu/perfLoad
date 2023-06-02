@@ -12,6 +12,12 @@
 // - CPU info
 
 const os = require('os');
+const io = require('socket.io-client');
+let socket = io('http://127.0.0.1:3000'); //server port
+
+socket.on('connect', () => {
+  console.log('NodeClient connected to the socket server... hooray!!!');
+})
 
 const performanceData = () => new Promise(async (resolve, reject) => {
   const osType = os.type() === 'Darwin' ? 'Mac' : os.type();
