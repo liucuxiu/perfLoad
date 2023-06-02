@@ -17,6 +17,18 @@ let socket = io('http://127.0.0.1:3000'); //server port
 
 socket.on('connect', () => {
   console.log('NodeClient connected to the socket server... hooray!!!');
+  
+  const nI = os.networkInterfaces();
+  let macA;
+  for (let key in nI) {
+    const isInternetFacing = !nI[key][0].internal;
+    
+    if (isInternetFacing) {
+      macA = nI[key][0].mac;
+      break;
+    }
+  }
+  console.log(macA);
 })
 
 const performanceData = () => new Promise(async (resolve, reject) => {
@@ -30,13 +42,13 @@ const performanceData = () => new Promise(async (resolve, reject) => {
   
   const usedMem = totalMem - freeMem;
   const memUsage = Math.floor(usedMem / totalMem * 100) / 100;
-
+  
   //cpu type
   const cpuType = os.cpus()[0].model;
-
+  
   //nums of cores
   const numCores = os.cpus().length;
-
+  
   //clock speed
   const cpuSpeed = os.cpus()[0].speed;
   
