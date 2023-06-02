@@ -1,4 +1,4 @@
-const Cpu = () => {
+const Cpu = ({data}) => {
   return (
     <div>
       <h1>Cpu</h1>

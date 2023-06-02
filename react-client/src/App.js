@@ -14,9 +14,13 @@ function App() {
     })
   }, [])
   
+  const widgets = Object.values(perfData).map((d) => {
+    return <Widget key={d.macA} data={d}/>
+  })
+  
   return (
     <>
-      <Widget/>
+      {widgets}
     </>
   
   );

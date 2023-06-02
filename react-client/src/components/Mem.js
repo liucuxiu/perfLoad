@@ -1,4 +1,4 @@
-const Mem = () => {
+const Mem = ({data}) => {
   return (
     <div>
       <h1>Mem</h1>
