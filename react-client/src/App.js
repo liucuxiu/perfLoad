@@ -1,5 +1,5 @@
 import './App.css';
-import socket from "./socketConnection";
+import socket from "./utilities/socketConnection";
 import {useEffect, useState} from "react";
 import Widget from "./components/Widget";
 
@@ -19,9 +19,9 @@ function App() {
   })
   
   return (
-    <>
+    <div className="container">
       {widgets}
-    </>
+    </div>
   
   );
 }

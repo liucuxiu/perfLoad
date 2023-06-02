@@ -16,6 +16,10 @@ const socketMain = (io) => {
     socket.on("perfData", (data) => {
       io.to('reactClient').emit('perfData', data)
     })
+    
+    socket.on("disconnect", () => {
+      io.to('reactClient').emit('connectedOrNot', {isAlive: false})
+    });
   });
 }
 
